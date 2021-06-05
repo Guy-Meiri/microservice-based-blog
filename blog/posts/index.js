@@ -10,7 +10,7 @@ const port = 4000;
 const posts = {};
 // const posts = {
 //   1230: {
-//     id: 1230,
+//     id: 1230,5
 //     title: "wha2",
 //   },
 // };

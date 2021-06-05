@@ -1,6 +1,5 @@
 const express = require("express");
 const { randomBytes } = require("crypto");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
@@ -10,7 +9,7 @@ const port = 4001;
 //   1230: [{ id: "234a", content: "a wha comment!" }],
 // };
 const commentsByIdOfPost = {};
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 app.get("/posts/:id/comments", (req, res) => {
@@ -26,7 +25,10 @@ app.post("/posts/:id/comments", async (req, res) => {
 
   comments.push({ id: commentId, content });
   commentsByIdOfPost[postId] = comments;
-  await axios.post("http:localhost:4005/events", { type: "COMMENT_CREATED", data: { id: commentId, content, postId } });
+  await axios.post("http://localhost:4005/events", {
+    type: "COMMENT_CREATED",
+    data: { id: commentId, content, postId },
+  });
 
   res.status(201).send(comments);
 });
