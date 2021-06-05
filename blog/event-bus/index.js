@@ -1,17 +1,16 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const axios = require("axios");
 const port = 4005;
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
   const event = req.body;
 
-  axios.post("http://localhost:4000", event);
-  axios.post("http://localhost:4001", event);
-  axios.post("http://localhost:4002", event);
+  axios.post("http://localhost:4000/events", event);
+  axios.post("http://localhost:4001/events", event);
+  //   axios.post("http://localhost:4002/events", event);
   res.send({ status: "OK" });
 });
 
