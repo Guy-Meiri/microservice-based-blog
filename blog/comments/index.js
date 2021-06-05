@@ -1,18 +1,25 @@
 const express = require("express");
 const { randomBytes } = require("crypto");
 const bodyParser = require("body-parser");
-
+const cors = require("cors");
 const app = express();
 const port = 4001;
 
-const commentsByIdOfPost = {
-  1230: [{ id: "234a", content: "a wha comment!" }],
-};
-
+// const commentsByIdOfPost = {
+//   1230: [{ id: "234a", content: "a wha comment!" }],
+// };
+const commentsByIdOfPost = {};
 app.use(bodyParser.json());
+app.use(cors());
 
+app.get("/posts/allComments", (req, res) => {
+  console.log("in allComments");
+  console.log(commentsByIdOfPost);
+  res.send(commentsByIdOfPost);
+});
 app.get("/posts/:id/comments", (req, res) => {
-  res.send(commentsByIdOfPost[req.params.id] || []);
+  const comments = commentsByIdOfPost[req.params.id];
+  res.send(comments || []);
 });
 
 app.post("/posts/:id/comments", (req, res) => {
